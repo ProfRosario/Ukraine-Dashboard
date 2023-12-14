@@ -1,24 +1,21 @@
 ---
 idt001:
   command: configTable
-  table-style: 'table-layout: fixed; width: 75% ; margin: 0 auto; border:0px solid rgb(0, 0, 0);'
+  table-style: 'table-layout: fixed; width: 70% ; margin: 0 auto; border:0px solid rgb(0, 0, 0); border-radius: 10px; background-color:transparent; border-color: blue;'
   tr-style: 'height: 60px;'
-  th-style: 'border: 4px solid black; text-align: center;align-items: center; align-self: center; width: 65%;'
-  td-style: 'font-size: 18px; text-align:center; border:0px solid rgb(0, 0, 0); padding: 5px;'
-  div-style: 'background-color: rgb(255, 222, 173);'
-  body-style: 'background-color: rgb(255, 222, 173);'
+  th-style: 'border: 0px solid black; text-align: center;align-items: center; align-self: center; width: 65%;'
+  td-style: 'font-size: 112px; text-align:center; border: 0px solid rgb(0, 0, 0); border-radius: 10px; padding: 5px; border-style:solid; border-color: blue; background-color:transparent;'
+  div-style: 'background-color: transparent; border: 0px solid rgb(0, 0, 0); border-radius: 10px; padding: 5px; border-style: solid; border-color: blue;'
+  # div-style: 'background-color: transparent; border: 2px solid rgb(0, 0, 0); border-radius: 10px; padding: 0px; border-style: dotted; border-color: blue; margin-left: auto; margin-right: auto; vertical-align:middle; width:100%;'
+  body-style: 'padding: 25px; background-color: rgb(255, 222, 173); border: 0px solid rgb(0, 0, 0); border-radius: 10px;  border-style: solid; border-color: green;'
+  
  
 id001:
   command: addHeaderImage
   title: ''
   image:  './images/ukraine.png'
   space: ''
-  #image-style: 'width: 60%; height: 180px;'
-  image-style: 'width: 65%; height: 180px; display: block; margin-left: auto; margin-right: auto; box-shadow: 0px 0px 20px #888; border-radius: 15px; border:0px solid rgb(0, 0, 0);'
-
-# id002:
-# command: addStyle
-#  css_file: 'style.css'
+  image-style: 'width: 65%; height: 180px; display: block; margin-left: auto; margin-right: auto; box-shadow: 0px 0px 20px lightblue; border-radius:15px; border-style:dashed; border-color:black; border-width:3px;'
 
 id003:
   command: addReturnLink
@@ -26,232 +23,251 @@ id003:
   link: ../index.html
   enable_new_tab: true
   space: ''
-  font-style: 'margin: 5px 0px 0px; font-size: 16px; font-family: Times New Roman; text-align: center; font-weight: normal; font-style: italic; color: green;'
+  font-style: 'margin: 5px 0px 0px; font-size: 14px; font-family: Times New Roman; text-align: center; font-weight: normal; font-style: italic; color: black; border: 0px solid rgb(0, 0, 0); border-radius: 10px; border-color: green; background-color: transparent;  margin-left: auto; margin-right: auto; vertical-align:middle; width:25%; height: auto;'
 
-Id004:
+Ida004:
   command: addTitle
   title: Ukraine News
   link: ''
   space: ''
-  font-style: 'margin: 20px 0px 0px; font-size: 28px; font-family: sans-serif ; text-align: center; font-weight: bold; font-style: normal; color: black; border:1px solid rgb(0, 0, 0); border-radius: 10px; border-color: blue; background-color:yellow; height: 35px; margin-left: auto; margin-right: auto; vertical-align:middle; width:75%;'
+  font-style: 'margin: 5px 0px 0px; font-size: 28px; font-family: sans-serif; text-align: center; font-weight: Bold; font-style: normal; color: black; border:1px solid rgb(0, 0, 0); border-radius: 10px; border-color: blue; background-color:yellow; margin-left: auto; margin-right: auto; vertical-align:middle; width:65%; height: auto;'
 
-id005:
+ida005:
   command: setMaxColumns
   max_columns: 5
 
-id0:
+ida0:
   command: addItem
   title: Warthog Production
   link: https://www.youtube.com/@WarthogProduction/videos
   image: ./images/WarthogProduction.png
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  #image-style: 'width: 60%; height: 180px;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
 
-id1:
+ida1:
   command: addItem
   title: Denys Davydov
   link: https://www.youtube.com/@DenysDavydov/videos
   image: ./images/DenysDavydov.png
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
 
-id2:
+ida2:
   command: addItem
   title: Insights from Ukraine and Russia
   link: https://www.youtube.com/@insightsfromukraineandrussia/videos
   image: ./images/insightsfromukraineandrussia.png
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
 
-id3:
+ida3:
   command: addItem
   title: Combat Veteran Reacts
   link: https://www.youtube.com/@CombatVeteranReacts/videos
   image: ./images/CombatVeteranReacts.png
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
 
-id4:
+ida4:
   command: addItem
   title: Jake Broe
   link: https://www.youtube.com/@JakeBroe/videos
   image: ./images/JakeBroe.png
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
 
-id5:
+id5a:
   command: addItem
   title: Operator Starsky UA
   link: https://www.youtube.com/@StarskyUA/videos
   image: ./images/StarskyUA.png
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
 
-id6:
+ida6:
   command: addItem
   title: TVP World - Military Mind
   link: https://www.youtube.com/playlist?list=PLVgLHR9B9u9SwxLnahAdjXFUsNJATSycH
   image: ./images/TVPWorld-MilitaryMind.png
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
   
-id7:
+ida7:
   command: addItem
   title: TVP World - Break the Fake
   link: https://www.youtube.com/playlist?list=PLVgLHR9B9u9RqsZlfE9UyrfEg3MkWiDTP
   image: ./images/TVPWorld-BreakTheFake.png
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
 
-id8:
+ida8:
   command: addItem
   title: Artur Rehi
   link: https://www.youtube.com/@arturrehi/videos
   image: ./images/arturrehi.png
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
 
-id9:
+ida9:
   command: addItem
   title: Ukraine Matters
   link: https://www.youtube.com/@UkraineMatters/videos
   image: ./images/UkraineMatters.png
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
-
-id10:
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
+  
+ida10:
   command: addItem
   title: Reporting from Ukraine
   link: https://www.youtube.com/@RFU/videos
   image: ./images/RFU.png
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
 
-id11:
+ida11:
   command: addItem
   title: Military Lab
   link: https://www.youtube.com/@militarylabb/videos
   image: ./images/militarylabb.png
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
 
-id12:
+ida12:
   command: addItem
   title: Kyiv Post
   link: https://www.youtube.com/@kyiv_post/videos
   image: ./images/kyiv_post.png
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
 
-id13:
+ida13:
   command: addItem
   title: Kings and Generals
   link: https://www.youtube.com/@KingsandGenerals/videos
   image: ./images/KingsandGenerals.png
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
   
-id14:
+ida14:
   command: addItem
   title: Ground News - Ukraine Crisis
   link: https://web.ground.news/interest/ukraine-crisis
   image: ./images/ukraine-crisis.png
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
 
-id15:
+ida15:
   command: addItem
   title: Kyiv Independent
   link: https://kyivindependent.com/
   image: ./images/kyivindependent.PNG
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
 
-id16:
+ida16:
   command: addItem
   title: Official Devine Justice
   link: https://www.youtube.com/@officialdivinejustice/videos
   image: ./images/officialdivinejustice.PNG
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
     
-id17:
+ida17:
   command: addItem
   title: Ukraine News TV
   link: https://www.youtube.com/@AutocracyTV/videos
   image: ./images/AutocracyTV.PNG
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
   
-id18:
+ida18:
   command: addItem
   title: Anders Puck Nielson
   link: https://www.youtube.com/@anderspuck/videos
   image: ./images/anderspuck.PNG
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
 
-id19:
+ida19:
   command: addItem
   title: Deep State Map Live
-  link: https://deepstatemap.live/en&quot;#7/49.146/32.728
+  link: https://deepstatemap.live/en/
   image: ./images/deepstatemap.PNG
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
 
 
-Ida004:
+Idb004:
   command: addTitle
   title: USA Politics - Pro-Democracy Movement
   link: ''
   space: ''
-  font-style: 'margin: 20px 0px 0px; font-size: 28px; font-family: sans-serif ; text-align: center; font-weight: bold; font-style: normal; color: black; border:1px solid rgb(0, 0, 0); border-radius: 10px; border-color: blue; background-color:yellow; height: 35px; margin-left: auto; margin-right: auto; vertical-align:middle; width:75%;'
+  font-style: 'margin: 5px 0px 0px; font-size: 28px; font-family: sans-serif; text-align: center; font-weight: Bold; font-style: normal; color: black; border:1px solid rgb(0, 0, 0); border-radius: 10px; border-color: blue; background-color:yellow; margin-left: auto; margin-right: auto; vertical-align:middle; width:65%; height: auto;'
  
-id005a:
+idb005:
   command: setMaxColumns
   max_columns: 4
   
-ida1:
+idb1:
   command: addItem
   title: MeidasTouch
   link: https://www.youtube.com/@MeidasTouch/videos
   image: ./images/MeidasTouch.png
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;' 
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
      
-ida2:
+idb2:
   command: addItem
   title: Brian Tyler Cohen
   link: https://www.youtube.com/@briantylercohen/videos
   image: ./images/briantylercohen.PNG
   space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 14px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 130px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'  
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
   
+  
+idb3:
+  command: addItem
+  title: Brian Tyler Cohen Spanish
+  link: https://www.youtube.com/@briantylercohenespanol/videos
+  image: ./images/briantylercohen.PNG
+  space: ''
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;' 
+
+
+idb4:
+  command: addItem
+  title: Joe Blogs
+  link: https://www.youtube.com/@JoeBlogs/videos
+  image: ./images/JoeBlogs.PNG
+  space: ''
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;' 
+    
 id006:
   command: addTimeStamp
   title: 'Last Created on :'
   space: ''
-  font-style: 'margin: 5px 0px 0px; font-size: 14px; font-family: "Times New Roman" ; text-align: center; font-weight: normal ; font-style: italic; color: blue;'
+  font-style: 'margin: 5px 0px 0px; font-size: 14px; font-family: Times New Roman; text-align: center; font-weight: normal; font-style: italic; color: black; border: 0px solid rgb(0, 0, 0); border-radius: 10px; border-color: green; background-color: yellow;  margin-left: auto; margin-right: auto; vertical-align:middle; width:25%; height: auto;'
