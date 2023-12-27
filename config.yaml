@@ -216,6 +216,32 @@ ida19:
   font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
   image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
 
+ida20:
+  command: addItem
+  title: Anna from Ukraine
+  link: https://www.youtube.com/@AnnafromUkraine
+  image: ./images/AnnafromUkraine.PNG
+  space: ''
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
+  
+ida21:
+  command: addItem
+  title: Joe Blogs
+  link: https://www.youtube.com/@JoeBlogs/videos
+  image: ./images/JoeBlogs.PNG
+  space: ''
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'   
+  
+ida22:
+  command: addItem
+  title: Professor Gerdes Explain UA
+  link: https://www.youtube.com/@dr.gerdes/videos
+  image: ./images/DrGerdes.PNG
+  space: ''
+  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
+  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;'
 
 Idb004:
   command: addTitle
@@ -257,14 +283,7 @@ idb3:
   image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;' 
 
 
-idb4:
-  command: addItem
-  title: Joe Blogs
-  link: https://www.youtube.com/@JoeBlogs/videos
-  image: ./images/JoeBlogs.PNG
-  space: ''
-  font-style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
-  image-style: 'width: 70%; height: 120px; box-shadow: 0px 0px 20px #888; border-radius: 15px; border: 0px solid black;' 
+
     
 id006:
   command: addTimeStamp
