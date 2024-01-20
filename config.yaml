@@ -3,11 +3,11 @@ idt001:
   command: configTable
   table-style: 'table-layout: fixed; width: 70% ; margin: 0 auto; border:0px solid rgb(0, 0, 0); border-radius: 10px; background-color:transparent; border-color: blue;'
   tr-style: 'height: 60px;'
-  th-style: 'border: 0px solid black; text-align: center;align-items: center; align-self: center; width: 65%;'
-  td-style: 'font-size: 112px; text-align:center; border: 0px solid rgb(0, 0, 0); border-radius: 10px; padding: 5px; border-style:solid; border-color: blue; background-color:transparent;'
-  div-style: 'background-color: transparent; border: 0px solid rgb(0, 0, 0); border-radius: 10px; padding: 5px; border-style: solid; border-color: blue;'
-  # div-style: 'background-color: transparent; border: 2px solid rgb(0, 0, 0); border-radius: 10px; padding: 0px; border-style: dotted; border-color: blue; margin-left: auto; margin-right: auto; vertical-align:middle; width:100%;'
-  body-style: 'padding: 25px; background-color: rgb(255, 222, 173); border: 0px solid rgb(0, 0, 0); border-radius: 10px;  border-style: solid; border-color: green;'
+  th-style: 'border: 4px solid black; text-align: center;align-items: center; align-self: center; width: 65%;'
+  td-style: 'font-size: 18px; text-align:center; border:0px solid rgb(0, 0, 0); border-radius: 10px; padding: 5px; border-style:solid; border-color: blue; background-color:transparent;'
+  div-style: 'background-color: transparent; border:0px solid rgb(0, 0, 0); border-radius: 10px; padding: 5px; border-style:solid; border-color:blue;'
+  body-style: 'padding: 25px; border: 0px; border-radius: 10px; border-style:solid; border-color:green; background-image: url("./images/background1.jpg"); background-repeat: no-repeat;background-attachment: fixed; background-size: 100% 100%;'
+  debug: 'true'
   
  
 id001:
