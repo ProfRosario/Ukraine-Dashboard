@@ -98,7 +98,7 @@ id5a:
 ida6:
   command: addItem
   title: Russian Media(Propaganda)
-  link: https://www.youtube.com/playlist?list=PLVgLHR9B9u9SwxLnahAdjXFUsNJATSycH
+  link: https://www.youtube.com/@russianmediamonitor
   image: ./images/RussianMediaMonitor.PNG
   space: ''
   p_style: 'margin: 0px 0px 0px; font-size: 12px; font-family: sans-serif; text-align: center; font-weight: normal; font-style: normal; color: blue;'
