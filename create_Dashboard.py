@@ -1,4 +1,5 @@
 import yaml
+import json
 import datetime
 
 # updated 3/31/23 Added Calendar to code
@@ -40,6 +41,14 @@ import datetime
 #  - Clean code: Replaced count = count + 1 with count += 1, removed code with format = [".jpg",".png",".jpeg","JPG", "PNG", "JPEG"], corrected global issues with 'count' with addItem and addEvent
 #  - Added 'target' attribute to all hrefs
 #  - Added external css file to control hyperlink color.
+# Updated 2/9/2024 
+#      Changed YAML file format removed the the variables idxxxx from the YAML file and updated source code to read new YAML file. 
+#      Assigned a default value to the style variable. This corrected the issue when no config data were found or missing
+#      Added try-except to catch error when reading the YAML file. If a YAML does exsist, added a default demo file.
+#      fixed error with addImageMap command
+#      Corrected a TypeError: can only concatenate str (not "int") to str at addEvent command. id is a number not a string str(id) TODO rename id to index
+#      Corrected default_table_style issue in yaml file. Commended the first default_style TODO remove repetition. 
+# Updated 2/10/24 : Corrected and exeption error opening a file with a variable not initialized.
 
 debug = False
 html_string =''
@@ -77,29 +86,103 @@ count_Table = 0
 # date_start = ''
 
 # Default settings. All setting can be changed using the YAML file.
-default_table_style = 'table-layout: fixed; width: 70% ; margin: 0 auto; border:0px solid rgb(0, 0, 0); border-radius: 20px; background-color:transparent; border-color: blue;'
-default_tr_style = 'height: 60px; '
-default_th_style = 'border: 4px solid black; text-align: center;align-items: center; align-self: center; width: 65%;'
-default_td_style = 'font-size: 18px; text-align:center; border:0px solid rgb(0, 0, 0); border-radius: 10px; padding: 5px; border-style:solid; border-color: blue; background-color:transparent;'
-default_div_style = 'background-color: rgb(255, 222, 173);'
-default_body_style = 'background-color: rgb(255, 222, 173);'
-default_img_style = 'width: 70%; height: 75px; box-shadow: 0px 0px 20px #888; border-radius: 15px;'
-default_p_style =  'margin: 5px 0px 0px; font-size: 14px; font-family: sans-serif ; text-align: center; font-weight: normal ; font-style: italic; color: blue;'
 
-default_img_style_Header = 'width: 65%; height: 180px; display: block; margin-left: auto; margin-right: auto; box-shadow: 0px 0px 20px lightblue; border-radius:15px; border-style:dashed; border-color:black; border-width:3px;'
+# TODO Remove default constant with default YAML file 2/8/24
+default_max_columns  = 4
+default_table_style = 'border: 5px dotted orange; border-radius: 10px; background-color: transparent; table-layout: fixed; width: 70% ; margin: 0px auto;'
+default_th_style = 'border: 8px dotted green;'
+default_tr_style = 'border: 5px solid blue; border-radius: 10px; width: auto; height: 60px;'
+default_td_style = 'border: 5px dotted red; border-radius: 10px; background-color:transparent; padding:10px; text-align:center; font-size: 18px; '
 
-default_p_style_addTitle = 'margin: 20px 0px 0px; font-size: 28px; font-family: sans-serif ; text-align: center; font-weight: bold; font-style: normal; color: black; border:1px solid rgb(0, 0, 0); border-radius: 10px; border-color: blue; background-color:yellow; height: 40px; margin-left: auto; margin-right: auto; vertical-align:middle; width:65%;'
+default_body_style = 'border: 5px solid grey; border-radius: 10px; padding: 25px; background-image: url("./images/background1.jpg"); background-repeat: no-repeat; background-attachment: fixed; background-size: 100%;'
+default_div_style = 'border: 2px solid green; border-radius: 10px; background-color: transparent; padding: 5px;'
 
-default_p_style_ReturnLink = 'margin: 5px 0px 0px; font-size: 14px; font-family: Times New Roman; text-align: center; font-weight: normal; font-style: italic; color: black; border: 0px solid rgb(0, 0, 0); border-radius: 10px; border-color: green; background-color:transparent; ; margin-left: auto; margin-right: auto; vertical-align:middle; width:25%; height: auto;'
 
-default_p_style_addItem =  'font-size: 14px; font-family: sans-serif; font-weight: normal; font-style: italic; color: blue; margin: 0px 0px 0px; text-align: center;'
 
-default_img_style_addItem = 'width: 70%; height: 75px; box-shadow: 2px 2px 20px gray; border-radius: 15px; border: 0px solid black;'
+default_img_style = 'width: 70%; height: 75px; box-shadow: 0px 0px 20px #888; border-radius: 15px;' # not used 2/8/24 TODO
+default_img_style_Header = 'width: 65%; height: 180px; display: block; margin-left: auto; margin-right: auto; box-shadow: 0px 0px 20px #888;  border: 4px dotted green; border-radius: 15px;'
+default_img_style_addItem = 'width: 70%; height: 75px; border: 4px dashed orange; border-radius: 15px; box-shadow: 5px 0px 20px #888;'
 
-default_p_style_TimeStamp = 'margin: 5px 0px 0px; font-size: 14px; font-family: sans-serif ; text-align: center; font-weight: normal ; font-style: italic; color: blue;'
+default_p_style =  'margin: 5px 0px 0px; font-size: 14px; font-family: sans-serif ; text-align: center; font-weight: normal ; font-style: italic; color: blue;' # only used in one location TODO
+default_p_style_addTitle = 'width: 75%; font-size: 28px; height: auto; margin-left: auto; margin-right: auto; text-align: center; color: black; font-family: sans-serif; font-weight: bold; font-style: normal; border: 3px dotted blue; border-radius: 10px; background-color: yellow;'
+default_p_style_ReturnLink = 'text-align: center; vertical-align: middle; color: black; font-size: 16px; font-family: Times New Roman; font-weight: bold; font-style: italic; border: 3px dotted red; border-radius: 5px; background-color: transparent; box-shadow: 5px 0px 20px #888; width: 25%; height: auto; margin: 5px auto 5px auto;'
+default_p_style_addItem =  'text-align: center; color: blue; font-size: 12px; font-family: sans-serif; font-weight: normal; font-style: italic; margin: 0px 0px 0px;'
+default_p_style_TimeStamp = 'text-align: center; vertical-align: middle; color: black; font-size: 16px; font-family: Times New Roman; font-weight: bold; font-style: italic; border: 3px dotted blue; border-radius: 7px; background-color: transparent; box-shadow: 5px 0px 20px #888; width: 25%; height: auto; margin: 5px auto 5px auto;'
+default_p_style_ReturnLik = 'text-align: center; vertical-align: middle; color: black; font-size: 16px; font-family: Times New Roman; font-weight: bold; font-style: italic; border: 3px dotted red; border-radius: 7px; background-color: transparent; box-shadow: 5px 0px 20px #888; width: 25%; height: auto; margin: 5px auto 5px auto;'
 
 default_target = "_blank"
 
+default_yaml_file = '''
+---
+Commands:
+      - configTable:
+              html_title: Demo Dashboard
+              debug: "true"
+
+      - addHeaderImage:
+              title: banking
+
+      - addReturnLink:
+              title: Return to Main Dashboard
+
+      - setMaxColumns:
+              max_columns: 3
+
+      - addTitle:
+              title: First Title Section
+
+      - addItem:
+              title: Add Item 1
+
+      - addItem:
+              title: Add Item 2
+
+      - addItem:
+              title: Add Item 3
+
+      - addItem:
+              title: Add Item 4
+
+      - addItem:
+              title: Add Item 5
+
+      - addItem:
+              title: Add Item 6
+
+      - addTitle:
+              title: Second Title Section
+
+      - setMaxColumns:
+              max_columns: 4
+
+      - addItem:
+              title: Add Item 7
+
+      - addItem:
+              title: Add Item 8
+
+      - addItem:
+              title: Add Item 9
+
+      - addItem:
+              title: Add Item 10    
+
+      - addTimeStamp:
+              title: 'This demo page was created on: '
+
+'''
+
+# default_style = '''
+#       .body_ID { ''' + default_body_style + '''}
+#       .div_ID { ''' + default_div_style + '''}
+#       .table_ID { ''' + default_table_style + '''}
+#       .tr_ID { ''' + default_tr_style + '''}
+#       .th_ID { ''' + default_th_style + '''}
+#       .td_ID { ''' + default_td_style + '''}
+#       .p_ID { ''' + default_p_style + '''}
+#       '''
+
+# style += default_style
 
 def reset_count():
   global count_Column
@@ -160,48 +243,87 @@ def disable_calendar():
   is_calendar_enabled = False
 
 
-f = open('config.yaml', 'r')
 try:
+    f = open('data.yaml', 'r')
+    
     data = yaml.safe_load(f.read())
-#    for id in data:
-#          print('command = ', data[id]['command'])
+          
+except:
+  data = yaml.safe_load(default_yaml_file)
 
-except yaml.YAMLError as exception:
+  add_css += '''
+    <style> 
+        a:link {
+        color: white;
+        background-color: transparent;
+        text-decoration: none;
+        }
 
-  print('======> Oops, error opening or reading YAML file \n')
-  print('exception error code = ', exception)
-f.close()
+        a:visited {
+        color: white;
+        background-color: transparent;
+        text-decoration: none;
+        }
+
+        a:hover {
+        color: green;
+        background-color: transparent;
+        text-decoration: underline;
+        font-weight: bold;
+        }
+
+        a:active {
+        color: yellow;
+        background-color: transparent;
+        text-decoration: underline;
+        }
+    </style>'''
+      
+# except yaml.YAMLError as exception:
+
+#   print('======> Oops, error opening or reading YAML file \n')
+#   print('exception error code = ', exception)
+#   f.close()
 
 
-for id in data:
 
+for id in range(len(data['Commands'])):
 #------------------- Command configTable --------------------------
-    if data[id]['command'] == 'configTable':
+    if 'configTable' in data['Commands'][id]:
+
+      COMMAND = 'configTable'
+      if debug: print("Command = " + COMMAND)
 
       close_all_tags()
 
-      if 'html_title' in data[id]: html_title = data[id]['html_title']
+      try:
+        if 'html_title' in data['Commands'][id][COMMAND]: html_title = data['Commands'][id][COMMAND]['html_title']
 
-      if 'table_style' in data[id]: default_table_style = data[id]['table_style']
+        if 'table_style' in data['Commands'][id][COMMAND]: default_table_style = data['Commands'][id][COMMAND]['table_style']
 
-      if 'th_style' in data[id]: default_th_style = data[id]['th_style']
+        if 'th_style' in data['Commands'][id][COMMAND]: default_th_style = data['Commands'][id][COMMAND]['th_style']
 
-      if 'tr_style' in data[id]: default_tr_style = data[id]['tr_style']
+        if 'tr_style' in data['Commands'][id][COMMAND]: default_tr_style = data['Commands'][id][COMMAND]['tr_style']
 
-      if 'td_style' in data[id]: default_td_style = data[id]['td_style']
+        if 'td_style' in data['Commands'][id][COMMAND]: default_td_style = data['Commands'][id][COMMAND]['td_style']
 
-      if 'div_style' in data[id]: default_div_style = data[id]['div_style']
+        if 'div_style' in data['Commands'][id][COMMAND]: default_div_style = data['Commands'][id][COMMAND]['div_style']
 
-      if 'body_style' in data[id]: default_body_style = data[id]['body_style']
+        if 'body_style' in data['Commands'][id][COMMAND]: default_body_style = data['Commands'][id][COMMAND]['body_style']
 
-      if 'p_style' in data[id]: default_p_style = data[id]['p_style']
+        if 'p_style' in data['Commands'][id][COMMAND]: default_p_style = data['Commands'][id][COMMAND]['p_style']
 
-      if 'target' in data[id] : default_target = data[id]['target']
+        if 'target' in data['Commands'][id][COMMAND]: default_target = data['Commands'][id][COMMAND]['target']
 
-      if 'debug' in data[id]: debug = data[id]['debug']
+        if 'debug' in data['Commands'][id][COMMAND]: debug = data['Commands'][id][COMMAND]['debug']
 
-      if debug : print("Command = " + data[id]['command'])
-       
+        if debug : print("Command = " + COMMAND)
+
+      except:
+        html_title = "Config - YAML Error"
+        debug = True
+      
+      style = ''
       style += '''
       .body_ID { ''' + default_body_style + '''}
       .div_ID { ''' + default_div_style + '''}
@@ -213,35 +335,45 @@ for id in data:
       '''
 
 # ------------------ Command addHeaderImage -----------------------
-    elif data[id]['command'] == 'addHeaderImage':
+    elif 'addHeaderImage' in data['Commands'][id]:
+
+      COMMAND = 'addHeaderImage'
+      if debug: print("Command = " + COMMAND)
       
       close_all_tags()
-      title = 'No Default Image Found'
-      alt_title = "No Default Image Found" 
+
+      title = ''
       image = './images/noimagefound.png'
       link = ''
-      img_style = default_img_style_addItem
-      p_style = default_p_style_addItem
+      img_style = default_img_style_Header
       div_style = default_div_style
       target = default_target
-      
-      if debug: print("Command = " + data[id]['command'])    
+ 
+      try:
+        if 'title' in data['Commands'][id][COMMAND]: title = data['Commands'][id][COMMAND]['title']
+
+        if 'image' in data['Commands'][id][COMMAND]: image = data['Commands'][id][COMMAND].get('image', './images/noimagefound.png')
+
+        if 'link' in data['Commands'][id][COMMAND]: link = data['Commands'][id][COMMAND]['link']
         
-      if 'title' in data[id]: title = data[id]['title']
+        if 'img_style' in data['Commands'][id][COMMAND]: img_style = data['Commands'][id][COMMAND]['img_style']      
 
-      if 'image' in data[id]:
-        image = data[id]['image']
-        if len(image) < 5:
-          alt_title = image
-          image = './images/noimagefound.png'
+        if 'div_style' in data['Commands'][id][COMMAND]: div_style = data['Commands'][id][COMMAND]['div_style']
 
-      if 'link' in data[id]: link = data[id]['link']
-      
-      if 'img_style' in data[id]: img_style = data[id]['img_style']      
+        if 'target' in data['Commands'][id][COMMAND]: target = data['Commands'][id][COMMAND]['target']
 
-      if 'div_style' in data[id]: div_style = data[id]['div_style']
+      except:
+        title = 'YAML Error'
+        image = './images/noimagefound.png'
+        link = ''
+        img_style = default_img_style_Header
+        div_style = default_div_style
+        target = default_target
 
-      if 'target' in data[id]: target = data[id]['target']
+
+      if len(image) < 5: alt_title = image = './images/noimagefound.png'
+
+      alt_title = image
 
       count_Div += 1
       div_ID = 'div_ID' + str(count_Div)
@@ -263,127 +395,159 @@ for id in data:
     '''
         
 # ------------------ Command addStyle ----------------------- -----
-    elif data[id]['command'] == 'addStyle':
+    elif 'addStyle' in data['Commands'][id]:
+
+      COMMAND = 'addStyle'
+      if debug: print("Command = " + COMMAND)
       
-      if debug: print("Command = " + data[id]['command'])
+      try:
+        if 'style' in data['Commands'][id][COMMAND]:
+          css_style = data['Commands'][id][COMMAND]['style']
+          add_css += '''
+      <style> 
+          ''' + css_style + '''
+      </style>'''
+        
+        if 'file_name' in data['Commands'][id][COMMAND]:
+          file_name = data['Commands'][id][COMMAND]['file_name']
+          file = open(file_name, "r")
+          add_css += '''
+      <style> 
+          ''' + file.read() + '''
+      </style>'''
+          file.close()
       
-      if 'style' in data[id]:
-        css_style = data[id]['style']
-        add_css += '''
-    <style> 
-        ''' + css_style + '''
-    </style>'''
-      
-      if 'file_name' in data[id]:
-        file_name = data[id]['file_name']
-        file = open(file_name, "r")
-        add_css += '''
-    <style> 
-        ''' + file.read() + '''
-    </style>'''
-        file.close()
+      except:
+        print('addStyle YAML Error')
 
 # ---------------- addScript ---- ------------
-    elif data[id]['command'] == 'addScriptXML':
+    elif 'addScriptXML' in data['Commands'][id]:
 
-      if debug: print("Command = " + data[id]['command'])
-      
-      if 'script' in data[id]:
-        script = data[id]['script']
-        add_script += ''' 
-        ''' + script + '''
-        '''
+      COMMAND = 'addScriptXML'
+      if debug: print("Command = " + COMMAND)
 
-      if 'file_name' in data[id]:
-        file_name = data[id]['file_name']
-        file = open(file_name, "r")
-        add_script += ''' 
-        ''' + file.read() + '''
-        '''
-        file.close()
+      try:
+        if 'script' in data['Commands'][id][COMMAND]:
+          script = data['Commands'][id][COMMAND]['script']
+          add_script += ''' 
+          ''' + script + '''
+          '''
+
+        if 'file_name' in data['Commands'][id][COMMAND]:
+          file_name = data['Commands'][id][COMMAND]['file_name']
+          file = open(file_name, "r")
+          add_script += ''' 
+          ''' + file.read() + '''
+          '''
+          file.close()
+      except:
+        if debug: print('addScriptXML YAML Error')
       
 # ---------------- addLink ----------------
-    elif data[id]['command'] == 'addLinkXML':
-      
-      if debug: print("Command = " + data[id]['command'])
-      
-      if 'link' in data[id]:
-        link = data[id]['link']
-        add_link += ''' 
-        ''' + link + '''
-        '''
+    elif 'addLinkXML' in data['Commands'][id]:
 
-      if 'file_name' in data[id]:
-        file_name = data[id]['file_name']
-        file = open(file_name, "r")
-        add_link += ''' 
-        ''' + file.read() + '''
-        '''
-        file.close()
+      COMMAND = 'addLinkXML'
+      if debug: print("Command = " + COMMAND)
+
+      try:
+        if 'link' in data['Commands'][id][COMMAND]:
+          link = data['Commands'][id][COMMAND]['link']
+          add_link += ''' 
+          ''' + link + '''
+          '''
+
+        if 'file_name' in data['Commands'][id][COMMAND]:
+          file_name = data['Commands'][id][COMMAND]['file_name']
+          file = open(file_name, "r")
+          add_link += ''' 
+          ''' + file.read() + '''
+          '''
+          file.close()
+      except: 
+        if debug: print('addLinkXML YAML Error')
                
 #---------------------Command addMeta data ------------------------  
-    elif data[id]['command'] == 'addMetaXML':
-      
-      if debug: print("Command = " + data[id]['command'])
-      
-      if 'meta' in data[id]:
-        meta = data[id]['meta']
-        add_meta += ''' 
-        ''' + meta + '''
-        '''
+    elif 'addMetaXML' in data['Commands'][id]:
 
-      if 'file_name' in data[id]:
-        file_name = data[id]['file_name']
-        file = open(file_name, "r")
-        add_meta += ''' 
-        ''' + file.read() + '''
-        '''
-        file.close()
+      COMMAMD = 'addMetaXML'
+      if debug: print("Command = " +  COMMAND)
+
+      try:
+        if 'meta' in data['Commands'][id][COMMAND]:
+          meta = data['Commands'][id][COMMAND]['meta']
+          add_meta += ''' 
+          ''' + meta + '''
+          '''
+
+        if 'file_name' in data['Commands'][id][COMMAND]:
+          file_name = data['Commands'][id][COMMAND]['file_name']
+          file = open(file_name, "r")
+          add_meta += ''' 
+          ''' + file.read() + '''
+          '''
+          file.close()
+      except:
+        if debug: print('addMetaXML YAML Error')
   
 #---------------------Command addJavaScript -----------------------
-    elif data[id]['command'] == 'addJavascript':
+    elif 'addJavascript' in data['Commands'][id]:
 
-      if debug: print("Command = " + data[id]['command'])
+      COMMAND = 'addJavascript'
+      if debug: print("Command = " + COMMAND)    
       
-      if 'script' in data[id]:
-        javascript = data[id]['script']
-        add_java += '''
-    <script> 
-        ''' + javascript+ '''
-    </script>'''
+      try:
+        if 'script' in data['Commands'][id][COMMAND]:
+          javascript = data['Commands'][id][COMMAND]['script']
+          add_java += '''
+      <script> 
+          ''' + javascript+ '''
+      </script>'''
 
-      if 'file_name' in data[id]:
-        file_name = data[id]['file_name']
-        file = open(file_name, "r")
-        add_java += '''
-    <script> 
-        ''' + file.read() + '''
-    </script>'''
-        file.close()
+        if 'file_name' in data['Commands'][id][COMMAND]:
+          file_name = data['Commands'][id][COMMAND]['file_name']
+          file = open(file_name, "r")
+          add_java += '''
+      <script> 
+          ''' + file.read() + '''
+      </script>'''
+          file.close()
+      
+      except:
+       if debug: print('addJavascript YAML Error')
+    
 
 #---------------------Command addReturnLink -----------------------
-    elif data[id]['command'] == 'addReturnLink':     
+    elif 'addReturnLink' in data['Commands'][id]: 
+
+      COMMAND = 'addReturnLink'
+      if debug: print("Command = " + COMMAND)
       
       close_all_tags() 
-     
+
       title = ''
-      link = ' '
+      link = ''
       p_style = default_p_style_ReturnLink
       div_style = default_div_style
-      image = './images/noimagefound.png'
       target = default_target
+      
+      try:
+        if 'title' in data['Commands'][id][COMMAND]: title = data['Commands'][id][COMMAND]['title']
+          
+        if 'link' in data['Commands'][id][COMMAND]: link =  data['Commands'][id][COMMAND]['link']
 
-      if debug: print("Command = " + data[id]['command'])
+        if 'p_style' in data['Commands'][id][COMMAND]: p_style = data['Commands'][id][COMMAND]['p_style']
 
-      if 'title' in data[id]: title = data[id]['title']
-        
-      if 'link' in data[id]: link =  data[id]['link']
+        if 'div_style' in data['Commands'][id][COMMAND]: div_style = data['Commands'][id][COMMAND]['div_style']
 
-      if 'p_style' in data[id]: p_style = data[id]['p_style']
+        if 'target' in data['Commands'][id][COMMAND]: target = data['Commands'][id][COMMAND]['target']
+      except:
+        if debug: print('addReturnLink YAML Error')
 
-      if 'target' in data[id]: target = data[id]['target']
-
-      if 'div_style' in data[id]: div_style = data[id]['div_style']
+        title = 'addReturnLink YAML Error'
+        link = ''
+        p_style = default_p_style_ReturnLink
+        div_style = default_div_style
+        target = default_target
       
       count_Div += 1
       div_ID = 'div_ID' + str(count_Div)
@@ -403,22 +567,30 @@ for id in data:
     </div>
     '''   
      
-# -------------------Command addTimeStamp -------------------------
-    elif data[id]['command'] == 'addTimeStamp':
-      
+# # -------------------Command addTimeStamp -------------------------
+#     elif data['Commands'][id]['command'] == 'addTimeStamp':
+    elif 'addTimeStamp' in data['Commands'][id]:
+
+      COMMAND = 'addTimeStamp'
+      if debug: print("Command = " + COMMAND)  
+  
       close_all_tags()
-      
+
       title = ''
       p_style = default_p_style_TimeStamp
       div_style = default_div_style
 
-      if debug: print("Command = " + data[id]['command'])
-      
-      if 'title' in data[id]: title = data[id]['title']
-      
-      if 'p_style' in data[id]: p_style = data[id]['p_style']
+      try:
+        if 'title' in data['Commands'][id][COMMAND]: title = data['Commands'][id][COMMAND]['title']
+        
+        if 'p_style' in data['Commands'][id][COMMAND]: p_style = data['Commands'][id][COMMAND]['p_style']
 
-      if 'div_style' in data[id]: div_style = data[id]['div_style']
+        if 'div_style' in data['Commands'][id][COMMAND]: div_style = data['Commands'][id][COMMAND]['div_style']
+      except:
+        if debug: print('addTimeStamp YAML error')
+        title = 'YAML Error '
+        p_style = default_p_style_TimeStamp
+        div_style = default_div_style
 
       x = datetime.datetime.now()
 
@@ -438,26 +610,33 @@ for id in data:
       body += '''
     <!-- addTimeStamp -->
     <div class = "''' + div_ID + ''' ">
-        <p class = "''' + p_ID + ''' ">''' + title + dateCreated + '''</p>
+        <p class = "''' + p_ID + ''' ">''' + title + ' ' + dateCreated + '''</p>
     </div>
     '''
 
 #------------------- Command addTitle------------
-    elif data[id]['command'] == 'addTitle':
-      
+    elif 'addTitle' in data['Commands'][id]:
+
+      COMMAND = 'addTitle'
+      if debug: print("Command = " + COMMAND)  
+
       close_all_tags()
 
       title = ''
       p_style = default_p_style_addTitle
       div_style = default_div_style
-      
-      if debug: print("Command = " + data[id]['command'])
-
-      if 'title' in data[id]: title =  data[id]['title']
- 
-      if 'p_style' in data[id]: p_style = data[id]['p_style']
- 
-      if 'div_style' in data[id]: div_style = data[id]['div_style']
+  
+      try:
+        if 'title' in data['Commands'][id][COMMAND]: title =  data['Commands'][id][COMMAND]['title']
+  
+        if 'p_style' in data['Commands'][id][COMMAND]: p_style = data['Commands'][id][COMMAND]['p_style']
+  
+        if 'div_style' in data['Commands'][id][COMMAND]: div_style = data['Commands'][id][COMMAND]['div_style']
+      except:
+        if debug: print('addTitle YAML Error')
+        title = 'AddTitle YAML Error'
+        p_style = default_p_style_addTitle
+        div_style = default_div_style
 
       count_Div += 1
       div_ID = 'div_ID' + str(count_Div)
@@ -473,51 +652,67 @@ for id in data:
       body += '''      
     <!-- addTitle -->
     <div class = "''' + div_ID + '''">
-      <p class = " ''' + p_ID + ''' ">''' + data[id]['title'] + '''</p>  
+      <p class = " ''' + p_ID + ''' ">''' + title + '''</p>  
     </div>
     '''
 
 #------------------- Command Set Max Columns ----------------------
-    elif data[id]['command'] == 'setMaxColumns':
-      
+    elif 'setMaxColumns' in data['Commands'][id]:
+
+      COMMAND = 'setMaxColumns'
+      if debug: print("Command = " + COMMAND) 
+
       close_all_tags()
       
-      if 'max_columns' in data[id]: max_columns = data[id]['max_columns']
+      try:
+        if 'max_columns' in data['Commands'][id][COMMAND]: max_columns = data['Commands'][id][COMMAND]['max_columns']
+      except:
+        if debug: print('setMaxColumns YAML Error')
+        max_columns = default_max_columns
       
-      if debug: print("Command = " + data[id]['command'] + ", max_columns = " + str(max_columns))
+      if debug: print("Command = " + COMMAND + "; max_columns = " + str(max_columns))  
 
 #--------------------Command addItem --------------------------------- 
-    elif data[id]['command'] == 'addItem':
-      
-      title = ''
-      alt_title = "No Default Image Found"
-      p_style = default_p_style_addItem
+    elif 'addItem' in data['Commands'][id]:
+
+      COMMAND = 'addItem' 
+      if debug: print("Command = " + COMMAND)  
+
+      title = 'YAML Error'
+      image = './images/noimagefound.png'
+      p_style = default_p_style
       img_style = default_img_style_addItem
       link = ''
       div_style = default_div_style
-      image = './images/noimagefound.png'
       target = default_target
-      
-      if debug: print("Command = " + data[id]['command'])  
-      
-      if 'title' in data[id]: title = data[id]['title']
 
-      if 'image' in data[id]:
-        image = data[id]['image']
-        alt_title = image
-        if len(image) < 5:
-          alt_title = image
-          image = './images/noimagefound.png'   
+      try:
+        if 'title' in data['Commands'][id][COMMAND]: title = data['Commands'][id][COMMAND]['title']
+
+        if 'image' in data['Commands'][id][COMMAND]: image = data['Commands'][id][COMMAND]['image']
+
+        if 'p_style' in data['Commands'][id][COMMAND]: p_style = data['Commands'][id][COMMAND]['p_style']
+        
+        if 'img_style' in data['Commands'][id][COMMAND]: img_style = data['Commands'][id][COMMAND]['img_style']
       
-      if 'p_style' in data[id]: p_style = data[id]['p_style']
-      
-      if 'img_style' in data[id]: img_style = data[id]['img_style']
+        if 'link' in data['Commands'][id][COMMAND]: link = data['Commands'][id][COMMAND]['link']
     
-      if 'link' in data[id]: link = data[id]['link']
-  
-      if 'div_style' in data[id]: div_style = data[id]['div_style']
+        if 'div_style' in data['Commands'][id][COMMAND]: div_style = data['Commands'][id][COMMAND]['div_style']
 
-      if 'target' in data[id]: target = data[id]['target']
+        if 'target' in data['Commands'][id][COMMAND]: target = data['Commands'][id][COMMAND]['target']
+
+      except:
+        title = 'YAML Error'
+        image = './images/noimagefound.png'
+        p_style = default_p_style
+        img_style = default_img_style_addItem
+        link = ''
+        div_style = default_div_style
+        target = default_target
+
+      if len(image) < 5: image = './images/noimagefound.png'
+
+      alt_title = image
               
       if not is_div_set:
         set_div()  
@@ -561,7 +756,7 @@ for id in data:
 
       count_Column += 1
 
-      if debug: print('=======>Count = ', count_Column)
+      #if debug: print('=======>Count = ', count_Column)
 
       if count_Column == max_columns:
         reset_tr()
@@ -570,43 +765,53 @@ for id in data:
         </tr>''' 
 
 #------------------Command  addImageMap -------------------------
-    elif data[id]['command'] == 'addImageMap':
-      
+    elif 'addImageMap' in data['Commands'][id]:
+
+      COMMAND = 'addImageMap'
+      if debug: print("Command = " + COMMAND)  
+
       close_all_tags()
-      
-      title = 'No Image Found'
-      alt_title = 'No Image Found'
-      link = ''
+
+      title = ''
       image = './images/noimagefound.png'
-      img_style = default_img_style_addItem
+      use_map = ''
+      add_Image_Map += ''
+      file_name = ''
+      img_style = default_img_style_Header
       div_style = default_div_style
 
-      if debug: print("Command = " + data[id]['command'])
+      try:
+        if 'title' in data['Commands'][id][COMMAND]: title = data['Commands'][id][COMMAND]['title']
+        
+        if 'image' in data['Commands'][id][COMMAND]: image = data['Commands'][id][COMMAND]['image']
 
-      if 'title' in data[id]: title = data[id]['title']
+        if 'use_map' in data['Commands'][id][COMMAND]: use_map = data['Commands'][id][COMMAND]['use_map']
+        
+        if 'map_style_html' in data['Commands'][id][COMMAND]: add_Image_Map += data['Commands'][id][COMMAND]['map_style_html']
+        
+        if 'img_style' in data['Commands'][id][COMMAND]: img_style = data['Commands'][id][COMMAND]['img_style']
 
-      if 'image' in data[id]:
-        image = data[id]['image']
-        if len(image) < 5:
-          alt_title = image
-          image = './images/noimagefound.png'  
+        if "div_style" in data['Commands'][id][COMMAND]: div_style = data['Commands'][id][COMMAND]['div_style']
 
-      if 'link' in data[id]: link = data[id]['link']  # TODO SHOULD REMOVE 1/29/24
+        if 'file_name' in data['Commands'][id][COMMAND]: 
+          file_name = data['Commands'][id][COMMAND]['file_name']
+          file = open(file_name, "r")
+          add_Image_Map += file.read()
+          file.close()
+      except:
+        if debug: print('AddImageMap YAML Error')
+        title = "YAML Error"
+        image = './images/noimagefound.png'
+        use_map = ''
+        add_Image_Map += ''
+        file_name = ''
+        img_style = default_img_style_Header
+        div_style = default_div_style
 
-      if 'use_map' in data[id]: use_map = data[id]['use_map']
-      
-      if 'map_style_html' in data[id]: add_Image_Map += data[id]['map_style_html']
-      
-      if 'file_name' in data[id]:
-        file_name = data[id]['file_name']
-        file = open(file_name, "r")
-        add_Image_Map += file.read()
-        file.close()
+      if len(image) < 5:  image = './images/noimagefound.png'
+  
+      alt_title = image
 
-      if 'img_style' in data[id]: img_style = data[id]['img_style']
-
-      if "div_style" in data[id]: div_style = data[id]['div_style']
- 
       count_Div += 1
       div_ID = 'div_ID' + str(count_Div) 
       
@@ -624,7 +829,10 @@ for id in data:
     '''      
 
 #------------------Command addToDo -----------------------------
-    elif data[id]['command'] == 'addToDo':
+    elif 'addToDo' in data['Commands'][id]:
+
+      COMMAND = 'addToDo'
+      if debug: print("Command = " + COMMAND)  
 
       title = "no title"
       date_start = " "    
@@ -633,20 +841,28 @@ for id in data:
       div_style = default_div_style
       p_style = default_p_style
 
-      if debug: print("Command = " + data[id]['command'])
+      try:
+        if 'title' in data['Commands'][id][COMMAND]: title = data['Commands'][id][COMMAND]['title']
 
-      if 'title' in data[id]: title = data[id]['title']
+        if 'date_start' in data['Commands'][id][COMMAND]: date_start = data['Commands'][id][COMMAND]['date_start']
 
-      if 'date_start' in data[id]: date_start = data[id]['date_start']
+        if 'date_end' in data['Commands'][id][COMMAND]: date_end = data['Commands'][id][COMMAND]['date_end']
 
-      if 'date_end' in data[id]: date_end = data[id]['date_end']
+        if 'complete' in data['Commands'][id][COMMAND]: complete = data['Commands'][id][COMMAND]['complete']
 
-      if 'complete' in data[id]: complete = data[id]['complete']
+        if 'p_style' in data['Commands'][id][COMMAND]: p_style = data['Commands'][id][COMMAND]['p_style']
 
-      if 'p_style' in data[id]: p_style = data[id]['p_style']
-
-      if "div_style" in data[id]: div_style = data[id]['div_style']
-
+        if "div_style" in data['Commands'][id][COMMAND]: div_style = data['Commands'][id][COMMAND]['div_style']
+      
+      except:
+        if debug: print('AddToDo YAML Error')
+        title = "YAML Error"
+        date_start = " "    
+        date_end = " "
+        complete = "no"
+        div_style = default_div_style
+        p_style = default_p_style
+      
       # Checks if any previous <div> and <table> tags were created. If not, a new <div> or/and <table> tags are created.
       if not is_div_set:
         set_div()
@@ -698,9 +914,12 @@ for id in data:
 #------------------Command addEvent------------------------
 #-----------------This code creates a calendar using jquery code and javascript    
 
-    elif  data[id]['command'] == "addEvent":
+    elif  'addEvent' in data['Commands'][id]:
       
-      # close_all_tags()
+      COMMAND = 'addEvent'
+      if debug: print("Command = " + COMMAND) 
+      
+      # close_all_tags() 
       
       name = " "
       badge = " "
@@ -711,23 +930,27 @@ for id in data:
       everyYear = ""
       div_style = default_div_style
 
-      if debug: print('Command = ' + data[id]['command'])
+      #if debug: print('Command = ' + data['Commands'][id][COMMAND]['command'])
 
-      if 'name' in data[id]: name = data[id]['name']
+      try:
+        if 'name' in data['Commands'][id][COMMAND]: name = data['Commands'][id][COMMAND]['name']
 
-      if 'badge' in data[id]: badge = data[id]['badge']
+        if 'badge' in data['Commands'][id][COMMAND]: badge = data['Commands'][id][COMMAND]['badge']
 
-      if 'date' in data[id]:  date_ = data[id]['date']
-      
-      if 'description' in data[id]: description = data[id]['description']
+        if 'date' in data['Commands'][id][COMMAND]:  date_ = data['Commands'][id][COMMAND]['date']
+        
+        if 'description' in data['Commands'][id][COMMAND]: description = data['Commands'][id][COMMAND]['description']
 
-      if 'type' in data[id]: type = data[id]['type']
+        if 'type' in data['Commands'][id][COMMAND]: type = data['Commands'][id][COMMAND]['type']
 
-      if 'color' in data[id]: color = data[id]['color']
+        if 'color' in data['Commands'][id][COMMAND]: color = data['Commands'][id][COMMAND]['color']
 
-      if 'everyYear' in data[id]: everyYear = data[id]['everyYear']
+        if 'everyYear' in data['Commands'][id][COMMAND]: everyYear = data['Commands'][id][COMMAND]['everyYear']
 
-      if 'div_style' in data[id]: div_style = data[id]['div_style']
+        if 'div_style' in data['Commands'][id][COMMAND]: div_style = data['Commands'][id][COMMAND]['div_style']
+
+      except:
+        if debug: print('AddEvent YAML Error')
 
       if not is_calendar_enabled: enable_calendar()
   # what is this doing 
@@ -755,7 +978,7 @@ for id in data:
       script +=   '''
                 myEventList.push(
                 {
-                    id: "''' + id + '''",
+                    id: "''' + str(id) + '''",
                     name:"''' + name +'''",
                     badge:  "''' + badge +'''",
                     date:"''' + date_ +'''",
