@@ -1,12 +1,13 @@
 # ignore all directories with the name archive
 archive/
+
 # ignore all directories with the name test
 test/
 
 # ignores all yaml files
 .yaml
 
-# does not ignore the README.md file
+# Does not ignore the config.yaml & data.yaml files
 !config.yaml
 !data.yaml
 
